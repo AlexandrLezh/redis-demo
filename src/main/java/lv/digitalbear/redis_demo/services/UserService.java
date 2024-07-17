@@ -3,6 +3,7 @@ package lv.digitalbear.redis_demo.services;
 import lv.digitalbear.redis_demo.entity.User;
 import lv.digitalbear.redis_demo.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class UserService {
         return userRepo.save(user);
     }
 
+    @Cacheable(value = "users", key = "#id")
     public User getById(Integer id) {
         return userRepo.findById(id).orElse(null);
     }
